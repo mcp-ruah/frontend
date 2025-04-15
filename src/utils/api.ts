@@ -7,7 +7,7 @@ const API_URL = "http://127.0.0.1:8000"; // 백엔드 URL에 맞게 수정
 let sessionId: string | null = localStorage.getItem("chat_session_id");
 
 /**
- * 채팅 메시지 전송 API (SSE 방식)
+ * 채팅 메시지 전송 API
  */
 export const sendMessage = async (
   message: string,
@@ -17,93 +17,53 @@ export const sendMessage = async (
   try {
     console.log(`API 요청 전송: ${API_URL}/api/chat`);
 
-    let fullResponse = "";
-    const url = new URL(`${API_URL}/api/chat`);
-    url.searchParams.append("message", message);
+    // 요청 데이터 준비
+    const requestData: any = {
+      message: message
+    };
 
     // 세션 ID가 있으면 추가
     if (sessionId) {
-      url.searchParams.append("session_id", sessionId);
+      requestData.session_id = sessionId;
     }
 
-    const eventSource = new EventSource(url.toString());
-
-    return new Promise((resolve, reject) => {
-      // 텍스트 응답 처리
-      eventSource.addEventListener("content_block_delta", (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          if (data.text) {
-            fullResponse += data.text;
-            if (onChunk) {
-              onChunk(data.text);
-            }
-          }
-        } catch (error) {
-          console.error("텍스트 응답 처리 오류:", error);
-        }
-      });
-
-      // 도구 사용 처리
-      eventSource.addEventListener("tool_use", (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          if (data.text) {
-            fullResponse += data.text;
-            if (onChunk) {
-              onChunk(data.text);
-            }
-          }
-        } catch (error) {
-          console.error("도구 사용 처리 오류:", error);
-        }
-      });
-
-      // 오류 처리
-      eventSource.addEventListener("error", (event: any) => {
-        try {
-          const data = JSON.parse(event.data);
-          const errorMessage = data.error || "알 수 없는 오류가 발생했습니다.";
-          console.error("SSE 오류:", errorMessage);
-          eventSource.close();
-          reject({
-            response: errorMessage,
-            error: errorMessage,
-          });
-        } catch (error) {
-          console.error("오류 이벤트 처리 실패:", error);
-          reject({
-            response: "서버 통신 중 오류가 발생했습니다.",
-            error: "알 수 없는 오류",
-          });
-        }
-      });
-
-      // 메시지 종료 처리
-      eventSource.addEventListener("message_stop", () => {
-        console.log("스트림 종료");
-
-        // 응답 헤더에서 세션 ID 가져오기
-        if (eventSource.url) {
-          const urlObj = new URL(eventSource.url);
-          const newSessionId = urlObj.searchParams.get("session_id");
-          if (newSessionId) {
-            sessionId = newSessionId;
-            localStorage.setItem("chat_session_id", newSessionId);
-            console.log("새 세션 ID 저장됨:", newSessionId);
-          }
-        }
-
-        eventSource.close();
-        if (onDone) {
-          onDone(fullResponse);
-        }
-        resolve({
-          response: fullResponse,
-          confidence: 0.95,
-        });
-      });
+    // POST 요청 전송
+    const response = await fetch(`${API_URL}/api/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
     });
+
+    // 응답 확인
+    if (!response.ok) {
+      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+    }
+
+    // 응답 데이터 처리
+    const data = await response.json();
+    
+    // 세션 ID 저장 (만약 응답에 포함되어 있다면)
+    if (data.session_id) {
+      sessionId = data.session_id;
+      localStorage.setItem("chat_session_id", data.session_id);
+      console.log("새 세션 ID 저장됨:", data.session_id);
+    }
+
+    // 응답 텍스트 처리
+    const responseText = data.response || "";
+    if (onChunk) {
+      onChunk(responseText);
+    }
+    if (onDone) {
+      onDone(responseText);
+    }
+
+    return {
+      response: responseText,
+      confidence: data.confidence || 0.95,
+    };
   } catch (error) {
     console.error("메시지 전송 오류:", error);
     return {
@@ -115,9 +75,17 @@ export const sendMessage = async (
 };
 
 /**
- * 대화 기록 초기화 API
+ * 현재 세션 ID 반환
  */
-export const resetChat = async (): Promise<void> => {
+export const getCurrentSessionId = (): string | null => {
+  return sessionId;
+};
+
+/**
+ * 대화 기록 초기화 API
+ * @param callback 초기화 완료 후 호출될 콜백 함수
+ */
+export const resetChat = async (callback?: () => void): Promise<void> => {
   try {
     console.log("대화 기록 초기화 요청");
 
@@ -151,6 +119,11 @@ export const resetChat = async (): Promise<void> => {
     }
 
     console.log("대화 기록 초기화 완료");
+    
+    // 콜백 함수가 제공된 경우 호출
+    if (callback) {
+      callback();
+    }
   } catch (error) {
     console.error("대화 기록 초기화 오류:", error);
     throw error;
