@@ -1,5 +1,5 @@
 import ChatPage from './components/4.pages/ChatPage';
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 const router = createBrowserRouter(
