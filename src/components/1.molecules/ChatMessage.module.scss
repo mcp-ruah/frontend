@@ -1,0 +1,41 @@
+@use '../../variables.scss' as *;
+@use '../../mixins.scss' as *;
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+  margin-bottom: 12px;
+
+  &.user {
+    align-self: flex-end;
+    align-items: flex-end;
+
+    .message-bubble {
+      background-color: $primary-color;
+      color: white;
+      border-radius: 16px 16px 0 16px;
+    }
+  }
+
+  &.bot {
+    align-self: flex-start;
+    align-items: flex-start;
+
+    .message-bubble {
+      background-color: #f1f1f1;
+      color: #333;
+      border-radius: 16px 16px 16px 0;
+    }
+  }
+
+  .message-bubble {
+    padding: 10px 14px;
+    word-break: break-word;
+  }
+
+  .timestamp {
+    font-size: 11px;
+    color: #999;
+    margin-top: 4px;
+  }
+}

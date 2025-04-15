@@ -1,0 +1,19 @@
+@use '../../variables.scss' as *;
+@use '../../mixins.scss' as *;
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border-top: 1px solid #eee;
+
+  .chat-input-field {
+    flex: 1;
+    margin-right: 8px;
+  }
+
+  .send-button {
+    min-width: 70px;
+  }
+}

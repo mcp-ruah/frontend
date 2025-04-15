@@ -1,0 +1,67 @@
+@use '../../variables.scss' as *;
+@use '../../mixins.scss' as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-medium;
+  background-color: $primary-color;
+  color: white;
+  @include box-shadow(1);
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-small;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: $spacing-small;
+    margin-right: $spacing-small;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    margin-right: $spacing-medium;
+    
+    .logo {
+      height: 32px;
+      width: auto;
+    }
+  }
+  
+  .title {
+    margin: 0;
+    font-size: $font-size-large;
+    font-weight: 600;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-medium;
+  }
+  
+  @include respond-to('md') {
+    padding: $spacing-medium $spacing-large;
+    
+    .title {
+      font-size: 1.5rem;
+    }
+    
+    .logo {
+      height: 40px;
+    }
+  }
+}
