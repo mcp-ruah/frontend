@@ -6,9 +6,7 @@ const API_URL = "http://127.0.0.1:8000"; // 백엔드 URL에 맞게 수정
 // 세션 ID 저장
 let sessionId: string | null = localStorage.getItem("chat_session_id");
 
-/**
- * 채팅 메시지 전송 API
- */
+
 export const sendMessage = async (
   message: string,
   onChunk?: (chunk: string) => void,
@@ -19,7 +17,7 @@ export const sendMessage = async (
 
     // 요청 데이터 준비
     const requestData: any = {
-      message: message
+      message: message,
     };
 
     // 세션 ID가 있으면 추가
@@ -29,40 +27,64 @@ export const sendMessage = async (
 
     // POST 요청 전송
     const response = await fetch(`${API_URL}/api/chat`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(requestData),
     });
 
     // 응답 확인
     if (!response.ok) {
-      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `서버 응답 오류: ${response.status} ${response.statusText}`
+      );
     }
 
-    // 응답 데이터 처리
-    const data = await response.json();
-    
-    // 세션 ID 저장 (만약 응답에 포함되어 있다면)
-    if (data.session_id) {
-      sessionId = data.session_id;
-      localStorage.setItem("chat_session_id", data.session_id);
-      console.log("새 세션 ID 저장됨:", data.session_id);
+    // 세션 ID 저장 (응답 헤더에서)
+    const respSessionId = response.headers.get("session_id");
+    if (respSessionId) {
+      sessionId = respSessionId;
+      localStorage.setItem("chat_session_id", respSessionId);
+      console.log("새 세션 ID 저장됨:", respSessionId);
     }
 
-    // 응답 텍스트 처리
-    const responseText = data.response || "";
-    if (onChunk) {
-      onChunk(responseText);
-    }
-    if (onDone) {
-      onDone(responseText);
-    }
+    if (response.body) {
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let fullResponse = "";
 
+      try {
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value, { stream: true });
+          // console.log("청크 수신:", chunk);
+
+          // 각 청크를 콜백으로 전달
+          if (onChunk && chunk) {
+            onChunk(chunk);
+          }
+
+          fullResponse += chunk;
+        }
+      } finally {
+        reader.releaseLock();
+      }
+
+      if (onDone) {
+        onDone(fullResponse);
+      }
+
+      return {
+        response: fullResponse,
+        confidence: 0.95,
+      };
+    }
     return {
-      response: responseText,
-      confidence: data.confidence || 0.95,
+      response: "응답 본문이 없습니다.",
+      confidence: 0,
     };
   } catch (error) {
     console.error("메시지 전송 오류:", error);
@@ -74,12 +96,6 @@ export const sendMessage = async (
   }
 };
 
-/**
- * 현재 세션 ID 반환
- */
-export const getCurrentSessionId = (): string | null => {
-  return sessionId;
-};
 
 /**
  * 대화 기록 초기화 API

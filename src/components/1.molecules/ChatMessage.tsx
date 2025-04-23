@@ -12,9 +12,10 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   
   return (
     <div className={`${styles.chatMessage} ${isUser ? styles.user : styles.bot}`}>
-      <div className={styles.messageBubble}>
-        {content}
-      </div>
+      <div 
+        className={styles.messageBubble}
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
       {message.timestamp && (
         <span className={styles.timestamp}>
           {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

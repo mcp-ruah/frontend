@@ -3,13 +3,14 @@ import ChatMessage from '../1.molecules/ChatMessage';
 import ChatInput from '../1.molecules/ChatInput';
 import Button from '../0.atoms/Button';
 import useChat from '../../hooks/useChat';
-import { resetChat, getCurrentSessionId } from '../../utils/api';
+import { resetChat } from '../../utils/api';
 import styles from './ChatContainer.module.scss';
 import buttonStyles from '../0.atoms/Button.module.scss';
 
 const ChatContainer: React.FC = () => {
     const { messages, isLoading, sendMessage } = useChat();
-    const [sessionId, setSessionId] = useState<string | null>(getCurrentSessionId());
+    const [sessionId, setSessionId] = useState<string | null>(
+      localStorage.getItem("chat_session_id"));
     
     const messagesEndRef = useRef<HTMLDivElement>(null);
   
@@ -28,7 +29,7 @@ const ChatContainer: React.FC = () => {
             window.location.reload(); // 간단하게 페이지 새로고침
           });
           // 세션 ID 업데이트
-          setSessionId(getCurrentSessionId());
+          setSessionId(localStorage.getItem("chat_session_id"));
         }
       } catch (error) {
         console.error('세션 초기화 중 오류 발생:', error);
