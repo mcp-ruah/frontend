@@ -1,14 +1,15 @@
-@use '../../variables.scss' as *;
-@use '../../mixins.scss' as *;
+@use '../../_variables.scss' as *;
+@use '../../_mixins.scss' as *;
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: $spacing-medium;
-  background-color: $primary-color;
+  background-color: var(--primary-color);
   color: white;
   @include box-shadow(1);
+  transition: background-color 0.3s ease;
   
   .header-left {
     display: flex;

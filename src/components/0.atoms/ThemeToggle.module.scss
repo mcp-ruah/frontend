@@ -1,0 +1,24 @@
+@use '../../_variables.scss' as *;
+@use '../../_mixins.scss' as *;
+
+.themeToggle {
+  background-color: var(--bg-secondary);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  position: relative;
+  white-space: nowrap;
+  margin-left: 12px;
+  
+  &:hover {
+    background-color: var(--bg-hover);
+  }
+} 

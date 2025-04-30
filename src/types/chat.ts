@@ -3,7 +3,10 @@ export type Message = {
   id?: string | number;
   content: string;
   role: "user" | "bot";
-  timestamp?: Date;
+  timestamp?: Date | string;
+  think?: string;
+  tool_call?: string;
+  tool_result?: string;
 };
 
 // API 응답 타입

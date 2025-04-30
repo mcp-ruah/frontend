@@ -2,10 +2,10 @@ import React, { useRef, useEffect, useState } from 'react';
 import ChatMessage from '../1.molecules/ChatMessage';
 import ChatInput from '../1.molecules/ChatInput';
 import Button from '../0.atoms/Button';
+import ThemeToggle from '../0.atoms/ThemeToggle';
 import useChat from '../../hooks/useChat';
 import { resetChat } from '../../utils/api';
 import styles from './ChatContainer.module.scss';
-import buttonStyles from '../0.atoms/Button.module.scss';
 
 const ChatContainer: React.FC = () => {
     const { messages, isLoading, sendMessage } = useChat();
@@ -40,16 +40,17 @@ const ChatContainer: React.FC = () => {
     return (
       <div className={styles.chatContainer}>
         <div className={styles.chatHeader}>
-          <h2>MCP 챗봇</h2>
-          <div className={styles.sessionInfo}>
+          <h2>PPS MCP 챗봇</h2>
+          <div className={styles.headerActions}>
             <span className={styles.sessionId}>세션 ID: {sessionId ? sessionId.substring(0, 8) + '...' : '없음'}</span>
             <Button 
               onClick={handleResetSession}
               disabled={isLoading}
-              className={buttonStyles.reset}
+              variant="reset"
             >
               대화 초기화
             </Button>
+            <ThemeToggle />
           </div>
         </div>
         

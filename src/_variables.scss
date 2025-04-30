@@ -1,19 +1,83 @@
-// 색상
-$primary-color: #4a6fa5;
+// 라이트 모드 색상
+$primary-color: #C889BA;
 $secondary-color: #6c757d;
 $light-color: #f8f9fa;
 $dark-color: #343a40;
-$user-message-bg: #e3f2fd;
+$user-message-bg: #E2DFE5;
 $bot-message-bg: #f1f1f1;
+$border-color: #CAC1D7;
+$point-color: #DE64C3;
+$text-color: #333;
+$bg-color: #fff;
+$code-bg-color: #f5f5f5;
+$code-inline-bg-color: #f5f5f5;
+$toggle-button-hover-bg: #f0f0f0;
+$bot-message-border: #666;
+$tool-call-bg: #2d2d2d;
+$tool-call-text: #f8f8f2;
+$tool-call-border: #444;
+$tool-result-bg: #f8f8f8;
+$tool-result-text: #333;
+$think-content-bg: #f9f9f9;
+$think-content-text: #666;
+$timestamp-color: #999;
+
+// 다크 모드 색상
+$dark-primary-color: #D49DCA;
+$dark-secondary-color: #a1a8ae;
+$dark-light-color: #444;
+$dark-dark-color: #f8f9fa;
+$dark-user-message-bg: #4D4950;
+$dark-bot-message-bg: #333;
+$dark-border-color: #5D566E;
+$dark-point-color: #FF7ED9;
+$dark-text-color: #e0e0e0;
+$dark-bg-color: #1a1a1a;
+$dark-code-bg-color: #2d2d2d;
+$dark-code-inline-bg-color: #333;
+$dark-toggle-button-hover-bg: #444;
+$dark-bot-message-border: #999;
+$dark-tool-call-bg: #1a1a1a;
+$dark-tool-call-text: #f8f8f2;
+$dark-tool-call-border: #666;
+$dark-tool-result-bg: #333;
+$dark-tool-result-text: #e0e0e0;
+$dark-think-content-bg: #333;
+$dark-think-content-text: #ccc;
+$dark-timestamp-color: #999;
+
+// 테마 변수 (기본값은 라이트 모드)
+$theme-primary-color: $primary-color;
+$theme-secondary-color: $secondary-color;
+$theme-light-color: $light-color;
+$theme-dark-color: $dark-color;
+$theme-user-message-bg: $user-message-bg;
+$theme-bot-message-bg: $bot-message-bg;
+$theme-border-color: $border-color;
+$theme-point-color: $point-color;
+$theme-text-color: $text-color;
+$theme-bg-color: $bg-color;
+$theme-code-bg-color: $code-bg-color;
+$theme-code-inline-bg-color: $code-inline-bg-color;
+$theme-toggle-button-hover-bg: $toggle-button-hover-bg;
+$theme-bot-message-border: $bot-message-border;
+$theme-tool-call-bg: $tool-call-bg;
+$theme-tool-call-text: $tool-call-text;
+$theme-tool-call-border: $tool-call-border;
+$theme-tool-result-bg: $tool-result-bg;
+$theme-tool-result-text: $tool-result-text;
+$theme-think-content-bg: $think-content-bg;
+$theme-think-content-text: $think-content-text;
+$theme-timestamp-color: $timestamp-color;
 
 // 크기
-$border-radius: 8px;
+$border-radius: 10px;
 $spacing-small: 8px;
 $spacing-medium: 16px;
 $spacing-large: 24px;
 
 // 폰트
 $font-primary: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-$font-size-small: 0.875rem;
-$font-size-medium: 1rem;
+$font-size-small: 0.95rem;
+$font-size-medium: 1.5rem;
 $font-size-large: 1.25rem;

@@ -6,6 +6,52 @@ const API_URL = "http://127.0.0.1:8000"; // 백엔드 URL에 맞게 수정
 // 세션 ID 저장
 let sessionId: string | null = localStorage.getItem("chat_session_id");
 
+// MCP 상태 정보를 위한 타입 정의
+export interface McpTool {
+  name: string;
+  description: string;
+}
+
+export interface McpServer {
+  name: string;
+  initialized: boolean;
+  config: {
+    command: string;
+    [key: string]: any;
+  };
+  tools_count: number;
+  tools: McpTool[];
+}
+
+export interface McpStatus {
+  status: string;
+  servers_count: number;
+  servers: McpServer[];
+}
+
+/**
+ * MCP 상태 정보 가져오기
+ */
+export const getMcpStatus = async (): Promise<McpStatus> => {
+  try {
+    const response = await fetch(`${API_URL}/api/mcp-status`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data as McpStatus;
+  } catch (error) {
+    console.error("MCP 상태 정보 요청 오류:", error);
+    throw error;
+  }
+};
 
 export const sendMessage = async (
   message: string,

@@ -1,0 +1,138 @@
+@use './_variables.scss' as *;
+@use './_mixins.scss' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #{$theme-primary-color};
+  --secondary-color: #{$theme-secondary-color};
+  --light-color: #{$theme-light-color};
+  --dark-color: #{$theme-dark-color};
+  --user-message-bg: #{$theme-user-message-bg};
+  --bot-message-bg: #{$theme-bot-message-bg};
+  --border-color: #{$theme-border-color};
+  --point-color: #{$theme-point-color};
+  --text-color: #{$theme-text-color};
+  --bg-color: #{$theme-bg-color};
+  --code-bg-color: #{$theme-code-bg-color};
+  --code-inline-bg-color: #{$theme-code-inline-bg-color};
+  --toggle-button-hover-bg: #{$theme-toggle-button-hover-bg};
+  --bot-message-border: #{$theme-bot-message-border};
+  --tool-call-bg: #{$theme-tool-call-bg};
+  --tool-call-text: #{$theme-tool-call-text};
+  --tool-call-border: #{$theme-tool-call-border};
+  --tool-result-bg: #{$theme-tool-result-bg};
+  --tool-result-text: #{$theme-tool-result-text};
+  --think-content-bg: #{$theme-think-content-bg};
+  --think-content-text: #{$theme-think-content-text};
+  --timestamp-color: #{$theme-timestamp-color};
+}
+
+// 다크 모드 클래스
+.dark-mode {
+  --primary-color: #{$dark-primary-color};
+  --secondary-color: #{$dark-secondary-color};
+  --light-color: #{$dark-light-color};
+  --dark-color: #{$dark-dark-color};
+  --user-message-bg: #{$dark-user-message-bg};
+  --bot-message-bg: #{$dark-bot-message-bg};
+  --border-color: #{$dark-border-color};
+  --point-color: #{$dark-point-color};
+  --text-color: #{$dark-text-color};
+  --bg-color: #{$dark-bg-color};
+  --code-bg-color: #{$dark-code-bg-color};
+  --code-inline-bg-color: #{$dark-code-inline-bg-color};
+  --toggle-button-hover-bg: #{$dark-toggle-button-hover-bg};
+  --bot-message-border: #{$dark-bot-message-border};
+  --tool-call-bg: #{$dark-tool-call-bg};
+  --tool-call-text: #{$dark-tool-call-text};
+  --tool-call-border: #{$dark-tool-call-border};
+  --tool-result-bg: #{$dark-tool-result-bg};
+  --tool-result-text: #{$dark-tool-result-text};
+  --think-content-bg: #{$dark-think-content-bg};
+  --think-content-text: #{$dark-think-content-text};
+  --timestamp-color: #{$dark-timestamp-color};
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: $font-primary;
+  font-size: $font-size-small;
+  line-height: 2.0;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// 테마 전환 버튼 스타일
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+  padding: 8px 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: $border-radius;
+  font-size: $font-size-small;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0.95;
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+} 

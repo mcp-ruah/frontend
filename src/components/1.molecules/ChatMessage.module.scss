@@ -1,41 +1,230 @@
-@use '../../variables.scss' as *;
-@use '../../mixins.scss' as *;
-.chat-message {
+@use '../../_variables.scss' as *;
+@use '../../_mixins.scss' as *;
+.chatMessage {
   display: flex;
   flex-direction: column;
-  max-width: 70%;
-  margin-bottom: 12px;
+  max-width: 100%;
+  position: relative;
+  padding: 30px 0;
 
   &.user {
     align-self: flex-end;
     align-items: flex-end;
+    width: auto;
 
-    .message-bubble {
-      background-color: $primary-color;
-      color: white;
-      border-radius: 16px 16px 0 16px;
+    .messageContent {
+      color: var(--text-color);
+      font-weight: 400;
+      text-align: left;
+      padding: 10px 14px;
+      background-color: var(--user-message-bg);
+      border-radius: 10px 10px 0 10px;
+      margin-left: 5%;
+      min-width: 150px;
+      max-width: 100%;
+      font-size: $font-size-small;
+    }
+
+    &::before {
+      content: '사용자';
+      position: absolute;
+      right: 0;
+      top: -14px;
+      font-size: 10px;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .thinkSection, .toolSection {
+      text-align: left;
     }
   }
 
   &.bot {
     align-self: flex-start;
     align-items: flex-start;
+    width: 100%;
+    flex: 1 1 auto;
 
-    .message-bubble {
-      background-color: #f1f1f1;
-      color: #333;
-      border-radius: 16px 16px 16px 0;
+    .messageContent {
+      color: var(--text-color);
+      border-left: 3px solid var(--bot-message-border);
+      padding-left: 12px;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      font-size: $font-size-small;
+      word-break: break-word;
+      margin: 10px 0px ;
+    }
+
+    &::before {
+      content: '챗봇';
+      position: absolute;
+      left: 0;
+      top: -14px;
+      font-size: 10px;
+      color: var(--bot-message-border);
+      font-weight: bold;
+    }
+    
+    .thinkSection, .toolSection {
+      text-align: left;
+      margin-bottom: 0px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .botAnswer {
+      margin-top: 8px;
+      width: 100%;
+      box-sizing: border-box;
+      
+      &:empty {
+        display: none;
+      }
+
+      // ReactMarkdown이 생성하는 요소들에 스타일 적용
+      & > * {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      p, div, pre {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      pre {
+        overflow-x: auto;
+      }
     }
   }
 
-  .message-bubble {
-    padding: 10px 14px;
-    word-break: break-word;
-  }
+
 
   .timestamp {
     font-size: 11px;
-    color: #999;
+    color: var(--timestamp-color);
     margin-top: 4px;
+  }
+
+  // 섹션 컨테이너
+  .sectionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    margin-top: 3px;
+    box-sizing: border-box;
+    
+    // 봇 메시지에서는 마진 제거 (최상단에 표시)
+    .bot & {
+      margin-top: 0;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+  }
+
+  // 섹션 헤더
+  .sectionHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // Think 섹션 스타일
+  .thinkSection {
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .thinkContent {
+    font-size: 0.85rem;
+    color: var(--think-content-text);
+    font-style: italic;
+    padding: 10px 12px;
+    background-color: var(--think-content-bg);
+    border-radius: 6px;
+    max-height: 300px;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease-in-out;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 2px;
+  }
+
+  // Tool 섹션 스타일
+  .toolSection {
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .toolContent {
+    background-color: var(--code-bg-color);
+    border-radius: 6px;
+    overflow: hidden;
+    max-height: 400px;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease-in-out;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 2px;
+  }
+
+  .toolCall, .toolResult {
+    margin: 0;
+    padding: 12px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    border-radius: 0;
+  }
+
+  .toolCall {
+    background-color: var(--tool-call-bg);
+    color: var(--tool-call-text);
+    border-bottom: 1px solid var(--tool-call-border);
+  }
+
+  .toolResult {
+    background-color: var(--tool-result-bg);
+    color: var(--tool-result-text);
+  }
+
+  // 토글 버튼 스타일
+  .toggleButton {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.02);
+    border: none;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: var(--toggle-button-hover-bg);
+      color: var(--primary-color);
+    }
+  }
+  
+  // 애니메이션
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
