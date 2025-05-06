@@ -5,7 +5,7 @@
   flex-direction: column;
   max-width: 100%;
   position: relative;
-  padding: 30px 0;
+  padding: 5px 0;
 
   &.user {
     align-self: flex-end;
@@ -159,6 +159,18 @@
     width: 100%;
     box-sizing: border-box;
     margin-top: 2px;
+    
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--border-color);
+      border-radius: 5px;
+    }
   }
 
   // Tool 섹션 스타일
@@ -170,21 +182,34 @@
 
   .toolContent {
     background-color: var(--code-bg-color);
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
     max-height: 400px;
     overflow-y: auto;
+    overflow-x: auto;
     animation: fadeIn 0.3s ease-in-out;
     width: 100%;
     box-sizing: border-box;
     margin-top: 2px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--border-color);
+      border-radius: 5px;
+    }
   }
 
   .toolCall, .toolResult {
     margin: 0;
     padding: 12px;
     font-family: monospace;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     overflow-x: auto;
     border-radius: 0;
   }

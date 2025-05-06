@@ -1,0 +1,114 @@
+@use '../../_variables.scss' as *;
+@use '../../_mixins.scss' as *;
+
+.statusPanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-left: 1px solid var(--border-color);
+  box-shadow: -2px 0 8px rgba(0,0,0,0.05);
+  z-index: 100;
+  padding: $spacing-large $spacing-medium;
+  overflow-y: auto;
+  font-family: $font-primary;
+  font-size: $font-size-xs;
+  border-radius: 8px;
+
+  h3 {
+    font-size: $font-size-small;
+    margin-top: $spacing-small;
+  }
+
+  .closeButton {
+    float: right;
+  }
+
+  .errorMessage {
+    color: red;
+  }
+
+  .serverRow {
+    margin: $spacing-small 0;
+    padding: $spacing-small;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    
+    .serverNameRow {
+      display: flex;
+      align-items: center;
+      font-size: $font-size-xs;
+      gap: $spacing-small;
+      justify-content: space-between;
+
+      .refreshButton {
+        font-size: $font-size-small;
+        padding: 2px 8px;
+        margin-left: auto;
+      }
+
+      .controlButton {
+        font-size: $font-size-xxs;
+        padding: 2px 8px;
+      }
+
+      .statusText {
+        font-size: $font-size-xxs;
+        color: var(--text-secondary);
+      }
+    }
+
+    .commandRow {
+      font-size: $font-size-xxs;
+    }
+    
+    .statusIndicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 1px;
+      vertical-align: middle;
+    
+      &.good {
+        background-color: #2ecc71;
+      }
+    
+      &.bad {
+        background-color: #e74c3c;
+      }
+
+      &.loading {
+        background-color: #f39c12;
+        animation: pulse 1s infinite alternate;
+      }
+    }
+      
+    .toolsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-small / 3;
+      margin-top: $spacing-xs;
+      .toolBadge {
+        display: inline-block;
+        color: var(--text-color);
+        font-size: $font-size-xxs;
+        padding: 1px 8px;
+        border-radius: 30px;
+        border: 1px solid var(--border-color);
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+} 

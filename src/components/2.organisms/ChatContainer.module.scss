@@ -59,10 +59,10 @@
     align-items: stretch;
     transition: background-color 0.3s ease;
     max-width: 100%;
-    gap: 16px;
+    gap: 40px;
 
     &::-webkit-scrollbar {
-      width: 6px;
+      width: 8px;
     }
     &::-webkit-scrollbar-corner {
       background: transparent;

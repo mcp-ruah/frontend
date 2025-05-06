@@ -1,0 +1,94 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## 트리 구조
+```
+.
+├── README.md
+├── eslint.config.js
+├── index.html
+├── node_modules/
+├── package.json
+├── pnpm-lock.yaml
+├── public/
+├── src
+│   ├── _mixins.scss
+│   ├── _variables.scss
+│   ├── assets
+│   │   └── react.svg
+│   ├── components
+│   │   ├── 0.atoms
+│   │   │   ├── Button.module.scss
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.module.scss
+│   │   │   ├── Input.tsx
+│   │   │   ├── ThemeToggle.module.scss
+│   │   │   └── ThemeToggle.tsx
+│   │   ├── 1.molecules
+│   │   │   ├── ChatInput.module.scss
+│   │   │   ├── ChatInput.tsx
+│   │   │   ├── ChatMessage.module.scss
+│   │   │   ├── ChatMessage.tsx
+│   │   │   ├── Header.module.scss
+│   │   │   └── Header.tsx
+│   │   ├── 2.organisms
+│   │   │   ├── ChatContainer.module.scss
+│   │   │   └── ChatContainer.tsx
+│   │   ├── 3.templates
+│   │   │   └── ChatTemplate.tsx
+│   │   └── 4.pages
+│   │       ├── ChatPage.module.scss
+│   │       └── ChatPage.tsx
+│   ├── global.d.ts
+│   ├── global.scss
+│   ├── hooks
+│   │   └── useChat.ts
+│   ├── main.tsx
+│   ├── types
+│   │   └── chat.ts
+│   ├── utils
+│   │   └── api.ts
+│   └── vite-env.d.ts
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
+
+## 프로젝트 구조
+Apply to typescript.m...
+```
+src/
+  ├── components/
+  │   ├── 0.atoms/
+  │   ├── 1.molecules/
+  │   ├── 2.organisms/
+  │   ├── 3.templates/
+  │   └── 4.pages/
+  ├── styles/
+  │   └── main.scss
+  ├── utils/
+  ├── hooks/
+  └── services/
+```
+## 규칙
+컴포넌트 구조
+Atoms: 가장 기본적인 UI 요소로, 버튼, 입력 필드 등과 같은 단일 요소를 포함합니다.
+Molecules: 두 개 이상의 아톰이 결합된 컴포넌트로, 예를 들어 입력 필드와 레이블이 결합된 폼 그룹을 포함합니다.
+Organisms: 여러 개의 분자와 아톰이 결합된 복잡한 컴포넌트로, 예를 들어 네비게이션 바나 카드 레이아웃을 포함합니다.
+Templates: 페이지의 레이아웃을 정의하며, 여러 개의 유기체를 포함할 수 있습니다.
+Pages: 실제 페이지를 구성하며, 템플릿을 사용하여 페이지의 구조를 정의합니다.
+## 스타일링
+모든 스타일은 SCSS 파일로 작성후 컴포넌트와 같은 폴더에 위치 합니다.
+컴포넌트별로 스타일을 분리하여 유지보수를 용이하게 합니다.
+공통 스타일은 main.scss에 정의하고, 필요한 경우 각 컴포넌트에서 import하여 사용합니다.
+##  훅
+Hooks: 커스텀 훅은 hooks/ 폴더에 작성하여 재사용성을 높입니다.
+## 서비스
+API 호출이나 데이터 관리를 위한 서비스는 utils/ 폴더에 작성합니다.
+패키지 관리
+패키지 관리는 pnpm을 사용하여 효율적으로 관리합니다.
+모든 패키지는 package.json에 명시하고, pnpm-lock.yaml 파일을 통해 버전을 고정합니다.

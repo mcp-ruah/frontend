@@ -1,4 +1,4 @@
-import { ChatResponse } from "../types/chat";
+import type { ChatResponse } from "../types/chat";
 
 // API 엔드포인트 기본 URL
 const API_URL = "http://127.0.0.1:8000"; // 백엔드 URL에 맞게 수정
@@ -15,9 +15,10 @@ export interface McpTool {
 export interface McpServer {
   name: string;
   initialized: boolean;
+  status?: string;
   config: {
     command: string;
-    [key: string]: any;
+    [key: string]: string;
   };
   tools_count: number;
   tools: McpTool[];
@@ -53,6 +54,81 @@ export const getMcpStatus = async (): Promise<McpStatus> => {
   }
 };
 
+/**
+ * MCP 서버 시작
+ * @param serverName 시작할 서버 이름
+ */
+export const startMcpServer = async (serverName: string): Promise<{status: string; name: string; message: string}> => {
+  try {
+    const response = await fetch(`${API_URL}/api/server/${serverName}/start`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`MCP 서버 ${serverName} 시작 오류:`, error);
+    throw error;
+  }
+};
+
+/**
+ * MCP 서버 중지
+ * @param serverName 중지할 서버 이름
+ */
+export const stopMcpServer = async (serverName: string): Promise<{status: string; name: string; message: string}> => {
+  try {
+    const response = await fetch(`${API_URL}/api/server/${serverName}/stop`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`MCP 서버 ${serverName} 중지 오류:`, error);
+    throw error;
+  }
+};
+
+/**
+ * MCP 서버 재시작
+ * @param serverName 재시작할 서버 이름
+ */
+export const restartMcpServer = async (serverName: string): Promise<{status: string; name: string; message: string}> => {
+  try {
+    const response = await fetch(`${API_URL}/api/server/${serverName}/restart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`MCP 서버 ${serverName} 재시작 오류:`, error);
+    throw error;
+  }
+};
+
 export const sendMessage = async (
   message: string,
   onChunk?: (chunk: string) => void,
@@ -62,9 +138,10 @@ export const sendMessage = async (
     console.log(`API 요청 전송: ${API_URL}/api/chat`);
 
     // 요청 데이터 준비
-    const requestData: any = {
+    const requestData: {message: string; session_id?: string} = {
       message: message,
     };
+    console.log(`requestData: ${JSON.stringify(requestData)}`)
 
     // 세션 ID가 있으면 추가
     if (sessionId) {
