@@ -28,7 +28,7 @@ const ThemeToggle: React.FC = () => {
 
   return (
     <button className={styles.themeToggle} onClick={toggleTheme}>
-      {isDarkMode ? '🌞 Light' : '🌙 Dark'}
+      {isDarkMode ? 'Light' :  'Dark'}
     </button>
   );
 };

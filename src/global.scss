@@ -30,6 +30,7 @@
   --think-content-bg: #{$theme-think-content-bg};
   --think-content-text: #{$theme-think-content-text};
   --timestamp-color: #{$theme-timestamp-color};
+  --text-secondary: #{$text-secondary}; 
 }
 
 // 다크 모드 클래스
@@ -56,6 +57,7 @@
   --think-content-bg: #{$dark-think-content-bg};
   --think-content-text: #{$dark-think-content-text};
   --timestamp-color: #{$dark-timestamp-color};
+  --text-secondary: #{$dark-text-secondary};
 }
 
 html, body {

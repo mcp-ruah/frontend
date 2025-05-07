@@ -21,7 +21,7 @@ $tool-result-text: #333;
 $think-content-bg: #f9f9f9;
 $think-content-text: #666;
 $timestamp-color: #999;
-
+$text-secondary: #666;
 // 다크 모드 색상
 $dark-primary-color: #D49DCA;
 $dark-secondary-color: #a1a8ae;
@@ -45,6 +45,8 @@ $dark-tool-result-text: #e0e0e0;
 $dark-think-content-bg: #333;
 $dark-think-content-text: #ccc;
 $dark-timestamp-color: #999;
+$dark-text-secondary: #ccc;
+
 
 // 테마 변수 (기본값은 라이트 모드)
 $theme-primary-color: $primary-color;
@@ -69,6 +71,7 @@ $theme-tool-result-text: $tool-result-text;
 $theme-think-content-bg: $think-content-bg;
 $theme-think-content-text: $think-content-text;
 $theme-timestamp-color: $timestamp-color;
+$theme-text-secondary: $text-secondary;
 
 // 크기
 $border-radius: 10px;

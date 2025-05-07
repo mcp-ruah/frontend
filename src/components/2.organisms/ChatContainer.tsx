@@ -131,13 +131,13 @@ const ChatContainer: React.FC = () => {
             >
               reset
             </Button>
-            <ThemeToggle />
             <Button
               variant="status"
               onClick={handleOpenStatus}
             >
-              mcp status
+              mcp
             </Button>
+            <ThemeToggle />
           </div>
         </div>
 

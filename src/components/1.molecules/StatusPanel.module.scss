@@ -46,12 +46,15 @@
 
       .refreshButton {
         font-size: $font-size-small;
+        color: var(--text-secondary);
         padding: 2px 8px;
         margin-left: auto;
       }
 
       .controlButton {
         font-size: $font-size-xxs;
+        color: var(--text-secondary);
+        background-color: rgba(0, 0, 0, 0.03);
         padding: 2px 8px;
       }
 

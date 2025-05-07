@@ -86,20 +86,21 @@
 
 .reset {
   @extend .button;
-  background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
   font-size: 0.8rem;
   padding: 6px 12px;
 
   &:hover:not(:disabled) {
-    background-color: rgba(220, 53, 69, 0.2);
+    background-color: rgba(0, 0, 0, 0.03);
   }
 }
 
 .status {
   @extend .button;
-  background-color: rgba(25, 135, 84, 0.1);
-  color: #198754;
+  background-color: rgba(0, 0, 0, 0.03);
+  color: var(--color-primary);
+
   font-size: 0.8rem;
   padding: 6px 12px;
   display: flex;
@@ -107,7 +108,8 @@
   gap: 4px;
 
   &:hover:not(:disabled) {
-    background-color: rgba(25, 135, 84, 0.2);
+    background-color: rgba(0, 0, 0, 0.03);
+
   }
 }
 
