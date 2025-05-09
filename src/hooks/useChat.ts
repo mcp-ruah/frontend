@@ -36,7 +36,7 @@ const useChat = () => {
 
     // 현재 처리 중인 태그와 위치 추적 변수
     let currentContent = "";
-    let remainingContent = content;
+    let remainingContent = content || "";
 
     // 태그 탐지 및 추출 함수
     const findAndExtractTag = (
@@ -209,7 +209,7 @@ const useChat = () => {
   }, []);
 
   const sendUserMessage = useCallback(
-    async (content: string) => {
+    async (content: string, file?: File | null) => {
       let tempMessageId: number;
 
       try {
@@ -283,7 +283,7 @@ const useChat = () => {
           setCurrentStreamingMessage("");
         };
 
-        await sendMessage(content, handleChunk, handleDone);
+        await sendMessage(content, handleChunk, handleDone, file);
       } catch (err) {
         console.error("채팅 오류:", err);
         setError({

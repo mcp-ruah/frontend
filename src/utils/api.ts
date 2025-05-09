@@ -58,7 +58,9 @@ export const getMcpStatus = async (): Promise<McpStatus> => {
  * MCP 서버 시작
  * @param serverName 시작할 서버 이름
  */
-export const startMcpServer = async (serverName: string): Promise<{status: string; name: string; message: string}> => {
+export const startMcpServer = async (
+  serverName: string
+): Promise<{ status: string; name: string; message: string }> => {
   try {
     const response = await fetch(`${API_URL}/api/server/${serverName}/start`, {
       method: "POST",
@@ -68,7 +70,9 @@ export const startMcpServer = async (serverName: string): Promise<{status: strin
     });
 
     if (!response.ok) {
-      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `서버 응답 오류: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
@@ -83,7 +87,9 @@ export const startMcpServer = async (serverName: string): Promise<{status: strin
  * MCP 서버 중지
  * @param serverName 중지할 서버 이름
  */
-export const stopMcpServer = async (serverName: string): Promise<{status: string; name: string; message: string}> => {
+export const stopMcpServer = async (
+  serverName: string
+): Promise<{ status: string; name: string; message: string }> => {
   try {
     const response = await fetch(`${API_URL}/api/server/${serverName}/stop`, {
       method: "POST",
@@ -93,7 +99,9 @@ export const stopMcpServer = async (serverName: string): Promise<{status: string
     });
 
     if (!response.ok) {
-      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `서버 응답 오류: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
@@ -108,17 +116,24 @@ export const stopMcpServer = async (serverName: string): Promise<{status: string
  * MCP 서버 재시작
  * @param serverName 재시작할 서버 이름
  */
-export const restartMcpServer = async (serverName: string): Promise<{status: string; name: string; message: string}> => {
+export const restartMcpServer = async (
+  serverName: string
+): Promise<{ status: string; name: string; message: string }> => {
   try {
-    const response = await fetch(`${API_URL}/api/server/${serverName}/restart`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_URL}/api/server/${serverName}/restart`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
-      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `서버 응답 오류: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
@@ -130,35 +145,60 @@ export const restartMcpServer = async (serverName: string): Promise<{status: str
 };
 
 export const sendMessage = async (
-  message: string,
+  message: string ,
   onChunk?: (chunk: string) => void,
-  onDone?: (fullResponse: string) => void
+  onDone?: (fullResponse: string) => void,
+  file?: File | null
 ): Promise<ChatResponse> => {
   try {
     console.log(`API 요청 전송: ${API_URL}/api/chat`);
 
-    // 요청 데이터 준비
-    const requestData: {message: string; session_id?: string} = {
-      message: message,
-    };
-    console.log(`requestData: ${JSON.stringify(requestData)}`)
+    // 쿼리 파라미터 구성
+    const queryParams = new URLSearchParams();
+    queryParams.append("message", message || "");
 
-    // 세션 ID가 있으면 추가
     if (sessionId) {
-      requestData.session_id = sessionId;
+      queryParams.append("session_id", sessionId);
+    }
+
+    const url = `${API_URL}/api/chat?${queryParams.toString()}`;
+    console.log("요청 URL:", url);
+
+    // FormData는 파일만 포함
+    const formData = new FormData();
+    if (file) {
+      formData.append("file", file, file.name);
     }
 
     // POST 요청 전송
-    const response = await fetch(`${API_URL}/api/chat`, {
+    const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
+      body: file ? formData : null, // 파일이 있을 때만 FormData 사용
     });
 
-    // 응답 확인
+    // 응답 상태 로깅
+    console.log(`서버 응답 상태: ${response.status} ${response.statusText}`);
+
+    /// 응답 확인
     if (!response.ok) {
+      // 에러 응답의 본문을 읽어서 더 자세한 오류 정보 확인
+      try {
+        const errorData = await response.json();
+        console.error("서버 오류 상세:", JSON.stringify(errorData));
+
+        // 세부 오류 정보 로깅
+        if (errorData.detail && Array.isArray(errorData.detail)) {
+          for (let i = 0; i < errorData.detail.length; i++) {
+            console.error(
+              `상세 오류 ${i + 1}:`,
+              JSON.stringify(errorData.detail[i])
+            );
+          }
+        }
+      } catch (e) {
+        console.error("서버 오류 응답을 파싱할 수 없음");
+      }
+
       throw new Error(
         `서버 응답 오류: ${response.status} ${response.statusText}`
       );

@@ -93,7 +93,7 @@
     .toolsContainer {
       display: flex;
       flex-wrap: wrap;
-      gap: $spacing-small / 3;
+      gap: calc($spacing-small / 3);
       margin-top: $spacing-xs;
       .toolBadge {
         display: inline-block;

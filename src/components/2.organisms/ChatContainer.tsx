@@ -27,6 +27,11 @@ const ChatContainer: React.FC = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, []);
 
+    const handleSendMessage = (message?: string | null, file?: File | null) => {
+      // useChat의 sendMessage 함수에 파일 전달
+      sendMessage(message || "", file);
+    };
+
     const handleOpenStatus = async () => {
       setIsStatusOpen(true);
       setIsStatusLoading(true);
@@ -161,7 +166,7 @@ const ChatContainer: React.FC = () => {
           <div ref={messagesEndRef} />
         </div>
         
-        <ChatInput onSend={sendMessage} isLoading={isLoading} />
+        <ChatInput onSend={handleSendMessage} isLoading={isLoading} />
       </div>
     );
   };
