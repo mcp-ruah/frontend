@@ -1,3 +1,4 @@
+import { Models } from "openai/resources.mjs";
 import type { ChatResponse } from "../types/chat";
 
 // API 엔드포인트 기본 URL
@@ -43,7 +44,9 @@ export const getMcpStatus = async (): Promise<McpStatus> => {
     });
 
     if (!response.ok) {
-      throw new Error(`서버 응답 오류: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `서버 응답 오류: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
@@ -145,7 +148,7 @@ export const restartMcpServer = async (
 };
 
 export const sendMessage = async (
-  message: string ,
+  message: string,
   onChunk?: (chunk: string) => void,
   onDone?: (fullResponse: string) => void,
   file?: File | null
@@ -154,26 +157,30 @@ export const sendMessage = async (
     console.log(`API 요청 전송: ${API_URL}/api/chat`);
 
     // 쿼리 파라미터 구성
-    const queryParams = new URLSearchParams();
-    queryParams.append("message", message || "");
+    const formData = new FormData();
+    formData.append("message", message || "");
+    // formData.append("model", "gpt-4o"); // UI추가되면 사용
+    // formData.append("temperature", "0.76");
+    // formData.append("max_tokens", "4096");
 
     if (sessionId) {
-      queryParams.append("session_id", sessionId);
+      formData.append("session_id", sessionId);
     }
 
-    const url = `${API_URL}/api/chat?${queryParams.toString()}`;
-    console.log("요청 URL:", url);
-
-    // FormData는 파일만 포함
-    const formData = new FormData();
     if (file) {
       formData.append("file", file, file.name);
+      console.log("add file : ", file.name, file.type, file.size);
+    }
+
+    // 디버깅용 FormData 출력
+    for (const pair of formData.entries()) {
+      console.log(`FormData 항목: ${pair[0]}, ${typeof pair[1]}`);
     }
 
     // POST 요청 전송
-    const response = await fetch(url, {
+    const response = await fetch(`${API_URL}/api/chat?`, {
       method: "POST",
-      body: file ? formData : null, // 파일이 있을 때만 FormData 사용
+      body: formData, // 파일이 있을 때만 FormData 사용
     });
 
     // 응답 상태 로깅
@@ -259,7 +266,6 @@ export const sendMessage = async (
   }
 };
 
-
 /**
  * 대화 기록 초기화 API
  * @param callback 초기화 완료 후 호출될 콜백 함수
@@ -298,7 +304,7 @@ export const resetChat = async (callback?: () => void): Promise<void> => {
     }
 
     console.log("대화 기록 초기화 완료");
-    
+
     // 콜백 함수가 제공된 경우 호출
     if (callback) {
       callback();
