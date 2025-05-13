@@ -1,10 +1,10 @@
 import { useState, useCallback } from "react";
-import { Message } from "../types/chat";
-import { sendMessage } from "../utils/api";
+import { Message } from "../utils/types/chatTypes";
+import { sendMessage } from "../utils/api/index";
 
 interface ChatError {
   message: string;
-}
+} 
 
 const useChat = () => {
   const [messages, setMessages] = useState<Message[]>([]);

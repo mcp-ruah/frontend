@@ -5,7 +5,7 @@ import Button from '../0.atoms/Button';
 import ThemeToggle from '../0.atoms/ThemeToggle';
 import StatusPanel from '../1.molecules/StatusPanel';
 import useChat from '../../hooks/useChat';
-import { resetChat, getMcpStatus, startMcpServer, stopMcpServer, restartMcpServer, type McpStatus } from '../../utils/api';
+import { resetChat, getMcpStatus, startMcpServer, stopMcpServer, restartMcpServer, type McpStatus } from '../../utils/api/index';
 import styles from './ChatContainer.module.scss';
 
 const ChatContainer: React.FC = () => {

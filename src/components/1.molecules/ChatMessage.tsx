@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Message } from '../../types/chat';
+import { Message } from '../../utils/types/chatTypes';
 import styles from './ChatMessage.module.scss';
 import ReactMarkdown from 'react-markdown';
 

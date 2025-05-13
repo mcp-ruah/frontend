@@ -1,5 +1,5 @@
 import Button from '../0.atoms/Button';
-import type { McpStatus, McpServer } from '../../utils/api';
+import type { McpStatus, McpServer } from '../../utils/api/index';
 import styles from './StatusPanel.module.scss';
 
 interface StatusPanelProps {
