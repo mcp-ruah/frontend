@@ -51,8 +51,9 @@ const StatusPanel: React.FC<StatusPanelProps> = ({
   };
 
   const isServerLoading = (serverName: string) => {
-    return isLoading || loadingServers.includes(serverName);
+    return isLoading || loadingServers.includes(serverName) ;
   };
+
 
   return (
     <div className={styles.statusPanel}>
@@ -82,7 +83,7 @@ const StatusPanel: React.FC<StatusPanelProps> = ({
                 >
                 ⟲                
                 </Button>
-                {server.initialized ? (
+                {server.initialized || server.status === 'external_running' ? (
                   <Button 
                     onClick={() => handleStopServer(server.name)} 
                     variant="reset" 
