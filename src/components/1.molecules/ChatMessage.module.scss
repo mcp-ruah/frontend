@@ -3,7 +3,7 @@
 .chatMessage {
   display: flex;
   flex-direction: column;
-  max-width: 100%;
+  max-width: 90%;
   position: relative;
   padding: 5px 0;
 
@@ -79,8 +79,31 @@
     
     .botAnswer {
       margin-top: 8px;
-      width: 100%;
+      width: 90%;
       box-sizing: border-box;
+
+        // ReactMarkdown에서 사용할 스타일
+      .markdownParagraph {
+        white-space: pre-wrap;
+      }
+
+      .codeBlock {
+        background-color: var(--code-bg-color);
+        padding: 10px;
+        border-radius: 4px;
+        overflow-x: auto;
+        margin: 10px 0;
+        width: 50%;
+      }
+
+      .inlineCode {
+        background-color: var(--code-inline-bg-color);
+        padding: 2px 4px;
+        border-radius: 2px;
+        color: var(--text-color);
+        font-family: monospace;
+      }
+
       
       &:empty {
         display: none;
@@ -106,7 +129,6 @@
   }
 
 
-
   .timestamp {
     font-size: 11px;
     color: var(--timestamp-color);
@@ -122,12 +144,12 @@
     margin-top: 3px;
     box-sizing: border-box;
     
-    // 봇 메시지에서는 마진 제거 (최상단에 표시)
-    .bot & {
-      margin-top: 0;
-      margin-bottom: 8px;
-      width: 100%;
-    }
+    // // 봇 메시지에서는 마진 제거 (최상단에 표시)
+    // .bot & {
+    //   margin-top: 0;
+    //   margin-bottom: 8px;
+    //   width: 100%;
+    // }
   }
 
   // 섹션 헤더

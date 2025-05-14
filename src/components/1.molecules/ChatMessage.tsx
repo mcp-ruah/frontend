@@ -123,24 +123,29 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const renderMainContent = () => {
     if (!content) return null;
     
+    // 백틱이나 <tool_call> 태그가 포함된 콘텐츠 처리
+    const processedContent = content
+      // <tool_call> 태그 제거 (이미 tool_call 프로퍼티로 처리됨)
+      .replace(/<tool_call>[\s\S]*?<\/tool_call>/g, '')
+      // <answer> 태그 제거하고 내용만 남김
+      .replace(/<answer>([\s\S]*?)<\/answer>/g, '$1')
+      .trim();
+    
+    if (!processedContent) return null;
+    
     return (
       <div className={styles.botAnswer}>
         <ReactMarkdown 
           components={{
             // 줄바꿈 유지를 위한 설정
-            p: ({ children }) => <p style={{ whiteSpace: 'pre-wrap' }}>{children}</p>,
+            p: ({ children }) => <p className={styles.markdownParagraph}>{children}</p>,
             // 코드 블록 스타일링
             code: ({ className, children, ...props }) => {
               const match = /language-(\w+)/.exec(className || '');
               const isCodeBlock = className?.includes('language-');
               
               return isCodeBlock ? (
-                <pre style={{ 
-                  backgroundColor: 'var(--code-bg-color)', 
-                  padding: '10px', 
-                  borderRadius: '4px',
-                  overflowX: 'auto'
-                }}>
+                <pre className={styles.codeBlock}>
                   <code
                     className={match ? `language-${match[1]}` : ''}
                     {...props}
@@ -150,13 +155,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
                 </pre>
               ) : (
                 <code
-                  className={className}
-                  style={{ 
-                    backgroundColor: 'var(--code-inline-bg-color)', 
-                    padding: '2px 4px', 
-                    borderRadius: '2px',
-                    color: 'var(--text-color)'
-                  }}
+                  className={`${className} ${styles.inlineCode}`}
                   {...props}
                 >
                   {children}
@@ -165,7 +164,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
             }
           }}
         >
-          {content}
+          {processedContent}
         </ReactMarkdown>
       </div>
     );

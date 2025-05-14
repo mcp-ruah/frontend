@@ -18,6 +18,7 @@
   --point-color: #{$theme-point-color};
   --text-color: #{$theme-text-color};
   --bg-color: #{$theme-bg-color};
+  --bg-secondary: #{$theme-bg-secondary};
   --code-bg-color: #{$theme-code-bg-color};
   --code-inline-bg-color: #{$theme-code-inline-bg-color};
   --toggle-button-hover-bg: #{$theme-toggle-button-hover-bg};
@@ -45,6 +46,7 @@
   --point-color: #{$dark-point-color};
   --text-color: #{$dark-text-color};
   --bg-color: #{$dark-bg-color};
+  --bg-secondary: #{$dark-bg-secondary};
   --code-bg-color: #{$dark-code-bg-color};
   --code-inline-bg-color: #{$dark-code-inline-bg-color};
   --toggle-button-hover-bg: #{$dark-toggle-button-hover-bg};
@@ -76,6 +78,9 @@ html, body {
 #root {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 a {

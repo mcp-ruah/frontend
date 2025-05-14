@@ -4,49 +4,12 @@
 .chatContainer {
   display: flex;
   flex-direction: column;
-  height: 100vh;   
+  height: 100%;
   width: 100%;
   background-color: var(--bg-color);
   overflow: hidden;
-  border-radius: 0;
-  box-shadow: none;
   transition: all 0.3s ease;
   position: relative;
-
-  .chatHeader {
-    padding: 16px 20px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    position: relative;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-    h2 {
-      margin: 0;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--primary-color);
-    }
-
-    .headerActions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: nowrap;
-
-      .sessionId {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        background-color: var(--bg-secondary);
-        padding: 4px 8px;
-        border-radius: 4px;
-      }
-    }
-  }
 
   .messagesContainer {
     flex: 1;

@@ -2,67 +2,75 @@
 @use '../../_mixins.scss' as *;
 
 .header {
+  padding: 16px 20px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $spacing-medium;
-  background-color: var(--primary-color);
-  color: white;
-  @include box-shadow(1);
-  transition: background-color 0.3s ease;
-  
-  .header-left {
+  width: 100%;
+  z-index: 10;
+
+  .headerLeft {
     display: flex;
     align-items: center;
-    gap: $spacing-small;
-  }
-  
-  .back-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: $spacing-small;
-    margin-right: $spacing-small;
-    
-    &:hover {
-      opacity: 0.8;
+    gap: 12px;
+
+    .backButton {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: var(--toggle-button-hover-bg);
+      }
     }
-  }
-  
-  .logo-container {
-    display: flex;
-    align-items: center;
-    margin-right: $spacing-medium;
-    
-    .logo {
-      height: 32px;
-      width: auto;
+
+    .logoContainer {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      
+      .logo {
+        width: 100%;
+        height: auto;
+      }
     }
-  }
-  
-  .title {
-    margin: 0;
-    font-size: $font-size-large;
-    font-weight: 600;
-  }
-  
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: $spacing-medium;
-  }
-  
-  @include respond-to('md') {
-    padding: $spacing-medium $spacing-large;
-    
+
     .title {
-      font-size: 1.5rem;
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary-color);
     }
-    
-    .logo {
-      height: 40px;
+  }
+
+  .headerRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+
+    .sessionId {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      background-color: var(--bg-secondary);
+      padding: 4px 8px;
+      border-radius: 4px;
     }
   }
 }
